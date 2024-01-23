@@ -4,8 +4,6 @@ using MigraDoc.Rendering;
 using MigraDoc.RtfRendering;
 using PdfSharp.Fonts;
 using PdfSharp.Snippets.Font;
-using System.IO;
-using System.IO.Pipes;
 
 namespace DokuDoku.PDF
 {
@@ -266,5 +264,7 @@ namespace DokuDoku.PDF
 
         #endregion
 
+        
+    
     }
 }
