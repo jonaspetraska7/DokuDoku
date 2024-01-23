@@ -4,7 +4,7 @@ using DokuDoku.Word;
 
 namespace DokuDoku
 {
-    public static class DokuDoku
+    public static class Doku
     {
         public static DokuDokuPDF PDF { get; set; } = new DokuDokuPDF();
         public static DokuDokuWord Word { get; set; } = new DokuDokuWord();

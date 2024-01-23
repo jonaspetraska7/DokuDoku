@@ -1,3 +1,4 @@
+using DokuDoku;
 using DokuDoku.PDF;
 
 namespace Tests
@@ -7,7 +8,7 @@ namespace Tests
         [Fact]
         public void PDFGeneratesInPath()
         {
-            DokuDoku.DokuDoku.PDF.Generate("Hello", ".", x =>
+            Doku.PDF.Generate("Hello", ".", x =>
             {
                 x.AddText("Hello");
                 x.AddTable("Table1", x =>
@@ -21,7 +22,7 @@ namespace Tests
         [Fact]
         public void PDFGeneratesInMemoryStream()
         {
-            DokuDoku.DokuDoku.PDF.Generate("Hello", x =>
+            Doku.PDF.Generate("Hello", x =>
             {
                 x.AddText("Hello");
                 x.AddTable("Table1", x =>
@@ -35,7 +36,7 @@ namespace Tests
         [Fact]
         public void RTFGeneratesInPath()
         {
-            DokuDoku.DokuDoku.Word.Generate("Hello", ".", x =>
+            Doku.Word.Generate("Hello", ".", x =>
             {
                 x.AddText("Hello");
                 x.AddTable("Table1", x =>
@@ -49,7 +50,7 @@ namespace Tests
         [Fact]
         public void RTFGeneratesInMemoryStream()
         {
-            DokuDoku.DokuDoku.Word.Generate("Hello", x =>
+            Doku.Word.Generate("Hello", x =>
             {
                 x.AddText("Hello");
                 x.AddTable("Table1", x =>
@@ -63,7 +64,7 @@ namespace Tests
         [Fact]
         public void ExcelGeneratesInPath()
         {
-            DokuDoku.DokuDoku.Excel.Generate("Hello", ".", x =>
+            Doku.Excel.Generate("Hello", ".", x =>
             {
                 x.AddText("Hello");
                 x.AddTable("Table1", x =>
@@ -77,7 +78,7 @@ namespace Tests
         [Fact]
         public void ExcelGeneratesInMemoryStream()
         {
-            DokuDoku.DokuDoku.Excel.Generate("Hello", x =>
+            Doku.Excel.Generate("Hello", x =>
             {
                 x.AddText("Hello");
                 x.AddTable("Table1", x =>
