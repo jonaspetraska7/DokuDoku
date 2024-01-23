@@ -1,7 +1,8 @@
-# DokuDoku
- .NET PDF, WORD, EXCEL Library. Easy to use, free forever.
 
+# ![image](https://github.com/jonaspetraska7/DokuDoku/assets/60759096/ede19124-ed73-478d-8caa-e9dccd7c3028) DokuDoku
 ---
+.NET PDF, WORD, EXCEL Library. Easy to use, free forever.
+
 DokuDoku is using Migradoc Library to make all of this happen. MIT License. Fully Open source.
 
 Documentation for the and useful resources for the Migradoc PDF library : 
