@@ -13,7 +13,7 @@ namespace DokuDoku.Word
         /// <returns></returns>
         public static MemoryStream GenerateWord(string fileName, Action<Document> DocumentConfig)
         {
-            var ms = PDFGenerator.GenerateRtf(fileName, DocumentConfig);
+            var ms = PDFGenerator.GenerateDocx(fileName, DocumentConfig);
 
             return ms;
         }
@@ -26,7 +26,7 @@ namespace DokuDoku.Word
         /// <param name="DocumentConfig"></param>
         public static void GenerateWord(string fileName, string savePath, Action<Document> DocumentConfig)
         {
-            PDFGenerator.GenerateRtf(fileName, savePath, DocumentConfig);
+            PDFGenerator.GenerateDocx(fileName, savePath, DocumentConfig);
         }
     }
 }

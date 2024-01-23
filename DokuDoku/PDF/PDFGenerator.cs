@@ -5,6 +5,7 @@ using MigraDoc.RtfRendering;
 using PdfSharp.Fonts;
 using PdfSharp.Snippets.Font;
 using System.IO;
+using System.IO.Pipes;
 
 namespace DokuDoku.PDF
 {
@@ -33,6 +34,52 @@ namespace DokuDoku.PDF
 
         #region Main methods
 
+        #region XLSX
+
+        /// <summary>
+        /// Generate XLSX to a MemoryStream
+        /// </summary>
+        /// <param name="pdfName"></param>
+        /// <param name="DocumentConfig"></param>
+        /// <returns></returns>
+        public static MemoryStream GenerateXlsx(string pdfName, Action<Document> DocumentConfig)
+        {
+            SetupPdf();
+
+            DocumentConfig(_document);
+
+            RtfDocumentRenderer rtfDocumentRenderer = new RtfDocumentRenderer();
+            var ms = new MemoryStream();
+            rtfDocumentRenderer.Render(_document, ms, false, null);
+
+            return ms;
+        }
+
+        /// <summary>
+        /// Generate XLSX to a Path
+        /// </summary>
+        /// <param name="pdfName"></param>
+        /// <param name="savePath"></param>
+        /// <param name="DocumentConfig"></param>
+        public static void GenerateXlsx(string pdfName, string savePath, Action<Document> DocumentConfig)
+        {
+            SetupPdf();
+
+            DocumentConfig(_document);
+
+            RtfDocumentRenderer rtfDocumentRenderer = new RtfDocumentRenderer();
+            var ms = new MemoryStream();
+            rtfDocumentRenderer.Render(_document, ms, false, null);
+
+            using (var fileStream = File.Create($"{savePath}\\{pdfName}.xlsx"))
+            {
+                ms.Seek(0, SeekOrigin.Begin);
+                ms.CopyTo(fileStream);
+            }
+        }
+
+        #endregion
+
         #region RTF
 
         /// <summary>
@@ -41,7 +88,7 @@ namespace DokuDoku.PDF
         /// <param name="pdfName"></param>
         /// <param name="DocumentConfig"></param>
         /// <returns></returns>
-        public static MemoryStream GenerateRtf(string pdfName, Action<Document> DocumentConfig)
+        public static MemoryStream GenerateDocx(string pdfName, Action<Document> DocumentConfig)
         {
             SetupPdf();
 
@@ -60,7 +107,7 @@ namespace DokuDoku.PDF
         /// <param name="pdfName"></param>
         /// <param name="savePath"></param>
         /// <param name="DocumentConfig"></param>
-        public static void GenerateRtf(string pdfName, string savePath, Action<Document> DocumentConfig)
+        public static void GenerateDocx(string pdfName, string savePath, Action<Document> DocumentConfig)
         {
             SetupPdf();
 
@@ -68,7 +115,13 @@ namespace DokuDoku.PDF
 
             RtfDocumentRenderer rtfDocumentRenderer = new RtfDocumentRenderer();
             var ms = new MemoryStream();
-            rtfDocumentRenderer.Render(_document, ms, false, savePath);
+            rtfDocumentRenderer.Render(_document, ms, false, null);
+
+            using (var fileStream = File.Create($"{savePath}\\{pdfName}.docx"))
+            {
+                ms.Seek(0, SeekOrigin.Begin);
+                ms.CopyTo(fileStream);
+            }
         }
 
         #endregion
@@ -109,7 +162,7 @@ namespace DokuDoku.PDF
             PdfDocumentRenderer pdfRenderer = new PdfDocumentRenderer();
             pdfRenderer.Document = _document;
             pdfRenderer.RenderDocument();
-            pdfRenderer.PdfDocument.Save(savePath + pdfName + ".pdf");
+            pdfRenderer.PdfDocument.Save($"{savePath}\\{pdfName}.pdf");
         }
 
         #endregion
