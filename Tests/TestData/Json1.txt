@@ -1,0 +1,31 @@
+{
+	"manoObjectas": {
+		"vardas": "Jonas",
+		"pavarde": "Auksine Raide",
+		"mO2" : {
+			"vardas": "Jonas",
+			"pavarde": "Auksine Raide"
+		},
+		"arr2" : [
+			"storas",
+			"lieknas",
+			"vidutinis"
+		]
+	},
+    "manoKolekcija": [
+        "storas",
+        "lieknas",
+        "vidutinis"
+    ],
+    "randomas": "7",
+    "randomfloatas": "92.604",
+    "boolas": "true",
+    "dateas": "1986-06-24",
+    "regExas": "hellooooooooooooooooooooooooo world",
+    "enumas": "online",
+    "firstname": "Brianna",
+    "lastname": "Lalitta",
+    "city": "Banda Aceh",
+    "country": "Gibraltar",
+    "countryCode": "BM"
+}

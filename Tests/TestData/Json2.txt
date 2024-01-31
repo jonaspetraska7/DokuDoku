@@ -1,0 +1,12 @@
+{
+  "name": "RandomObject",
+  "type": "example",
+  "value": 42,
+  "isAwesome": true,
+  "nestedObject": {
+    "property1": "nestedValue1",
+    "property2": 123
+  },
+  "randomArray": ["apple", "banana", "cherry"],
+  "isComplete": false
+}

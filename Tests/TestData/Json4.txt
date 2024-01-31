@@ -1,0 +1,107 @@
+{
+  "organization": {
+    "name": "TechCo",
+    "departments": [
+      {
+        "name": "Engineering",
+        "teams": [
+          {
+            "teamName": "Backend Team",
+            "members": [
+              {
+                "id": 101,
+                "name": "Alice",
+                "position": "Software Engineer",
+                "skills": ["Java", "Spring", "SQL"]
+              },
+              {
+                "id": 102,
+                "name": "Bob",
+                "position": "Senior Software Engineer",
+                "skills": ["Python", "Django", "MongoDB"]
+              }
+            ]
+          },
+          {
+            "teamName": "Frontend Team",
+            "members": [
+              {
+                "id": 103,
+                "name": "Charlie",
+                "position": "Frontend Developer",
+                "skills": ["JavaScript", "React", "CSS"]
+              },
+              {
+                "id": 104,
+                "name": "David",
+                "position": "UI/UX Designer",
+                "skills": ["UI/UX Design", "Figma"]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Marketing",
+        "teams": [
+          {
+            "teamName": "Digital Marketing",
+            "members": [
+              {
+                "id": 201,
+                "name": "Eva",
+                "position": "Digital Marketing Specialist",
+                "campaigns": ["Social Media", "Email Marketing"]
+              },
+              {
+                "id": 202,
+                "name": "Frank",
+                "position": "SEO Analyst",
+                "skills": ["SEO Optimization", "Google Analytics"]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "events": [
+    {
+      "eventName": "Tech Summit 2024",
+      "date": "2024-08-15",
+      "location": "Conference Center",
+      "speakers": [
+        {
+          "name": "Speaker A",
+          "topic": "Future Technologies"
+        },
+        {
+          "name": "Speaker B",
+          "topic": "Innovations in AI"
+        }
+      ]
+    },
+    {
+      "eventName": "Product Launch",
+      "date": "2024-09-20",
+      "location": "TechCo Headquarters",
+      "products": ["Product X", "Product Y"]
+    }
+  ],
+  "meta": {
+    "isPremium": true,
+    "foundingYear": 2000,
+    "website": "https://techco.com",
+    "partners": ["Partner1", "Partner2"],
+    "activeProjects": {
+      "projectA": {
+        "status": "In Progress",
+        "deadline": "2024-12-31"
+      },
+      "projectB": {
+        "status": "Completed",
+        "completionDate": "2024-05-15"
+      }
+    }
+  }
+}

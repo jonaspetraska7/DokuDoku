@@ -25,4 +25,8 @@
     <ProjectReference Include="..\DokuDoku\DokuDoku.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="TestData" />
+  </ItemGroup>
+
 </Project>

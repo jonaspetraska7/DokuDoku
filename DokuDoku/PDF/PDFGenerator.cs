@@ -2,6 +2,7 @@
 using MigraDoc.DocumentObjectModel.Tables;
 using MigraDoc.Rendering;
 using MigraDoc.RtfRendering;
+using Newtonsoft.Json.Linq;
 using PdfSharp.Fonts;
 using PdfSharp.Snippets.Font;
 
@@ -29,9 +30,53 @@ namespace DokuDoku.PDF
             }
         }
 
-
         #region Main methods
 
+        #region Generate 
+        
+        #region PDF
+        
+        /// <summary>
+        /// Generate PDF to a MemoryStream
+        /// </summary>
+        /// <param name="pdfName"></param>
+        /// <param name="DocumentConfig"></param>
+        /// <returns></returns>
+        public static MemoryStream GeneratePdf(string pdfName, Action<Document> DocumentConfig)
+        {
+            SetupPdf();
+
+            DocumentConfig(_document);
+
+            PdfDocumentRenderer pdfRenderer = new PdfDocumentRenderer();
+            pdfRenderer.Document = _document;
+            pdfRenderer.RenderDocument();
+            var ms = new MemoryStream();
+            pdfRenderer.PdfDocument.Save(ms);
+
+            return ms;
+        }
+
+        /// <summary>
+        /// Generate PDF to a Path
+        /// </summary>
+        /// <param name="pdfName"></param>
+        /// <param name="savePath"></param>
+        /// <param name="DocumentConfig"></param>
+        public static void GeneratePdf(string pdfName, string savePath, Action<Document> DocumentConfig)
+        {
+            SetupPdf();
+
+            DocumentConfig(_document);
+
+            PdfDocumentRenderer pdfRenderer = new PdfDocumentRenderer();
+            pdfRenderer.Document = _document;
+            pdfRenderer.RenderDocument();
+            pdfRenderer.PdfDocument.Save($"{savePath}\\{pdfName}.pdf");
+        }
+        
+        #endregion
+        
         #region XLSX
 
         /// <summary>
@@ -124,44 +169,7 @@ namespace DokuDoku.PDF
 
         #endregion
 
-        /// <summary>
-        /// Generate PDF to a MemoryStream
-        /// </summary>
-        /// <param name="pdfName"></param>
-        /// <param name="DocumentConfig"></param>
-        /// <returns></returns>
-        public static MemoryStream GeneratePdf(string pdfName, Action<Document> DocumentConfig)
-        {
-            SetupPdf();
-
-            DocumentConfig(_document);
-
-            PdfDocumentRenderer pdfRenderer = new PdfDocumentRenderer();
-            pdfRenderer.Document = _document;
-            pdfRenderer.RenderDocument();
-            var ms = new MemoryStream();
-            pdfRenderer.PdfDocument.Save(ms);
-
-            return ms;
-        }
-
-        /// <summary>
-        /// Generate PDF to a Path
-        /// </summary>
-        /// <param name="pdfName"></param>
-        /// <param name="savePath"></param>
-        /// <param name="DocumentConfig"></param>
-        public static void GeneratePdf(string pdfName, string savePath, Action<Document> DocumentConfig)
-        {
-            SetupPdf();
-
-            DocumentConfig(_document);
-
-            PdfDocumentRenderer pdfRenderer = new PdfDocumentRenderer();
-            pdfRenderer.Document = _document;
-            pdfRenderer.RenderDocument();
-            pdfRenderer.PdfDocument.Save($"{savePath}\\{pdfName}.pdf");
-        }
+        #endregion
 
         #endregion
 
@@ -213,6 +221,8 @@ namespace DokuDoku.PDF
         public static void Config(this Table table, bool useBorders = true, params int[] columns)
         {
             table.Borders.Visible = useBorders;
+            table.LeftPadding = 0;
+            table.Format.LeftIndent = 3;
             foreach (var c in columns)
             {
                 var col = table.AddColumn();
@@ -264,7 +274,75 @@ namespace DokuDoku.PDF
 
         #endregion
 
-        
+        #region Automatic table generation
+
+        public static void ConvertToTable(this Document document, object x, string tableName = "", 
+            bool renderOnCondition = true)
+        {
+            if (x == null)
+            {
+                return;
+            }
+            if (renderOnCondition)
+            {
+                var section = document.LastSection;
+                section.AddParagraph(" ");
+                section.AddParagraph(tableName).Format.Font.Bold = true;
+                var table = section.AddTable();
+                
+                table.ConvertToTable(x);
+            }
+        }
+
+        /// <summary>
+        /// Automatic table generation
+        /// </summary>
+        /// <param name="innerTable"></param>
+        /// <param name="x"></param>
+        /// <param name="isInnerTable"></param>
+        private static void ConvertToTable(this Table innerTable, object x, params int[] columns)
+        {
+            var jObject = JObject.FromObject(x);
+
+            if (jObject == null)
+            {
+                return;
+            }
+
+            Table table = innerTable;
+
+            if (columns.Length == 0)
+            {
+                columns = new[] { 250, 250 };
+            }
+            
+            table.Config(true, columns);
+
+            foreach (var prop in jObject.Properties())
+            {
+                if ((!prop.Value?.GetType().ToString().Contains("JArray") ?? false) && (prop.Value?.HasValues ?? false))
+                {
+                    table.Property(prop.Name, x =>
+                    {
+                        x.ConvertToTable(prop.Value, columns[0]/2, columns[1]/2);
+                    });
+                }
+                else
+                {
+                    if (prop.Value?.GetType().ToString().Contains("JArray") ?? false)
+                    {
+                        var collectionAsString = prop.Value?.ToString().Replace("[","").Replace("]","").Replace(",","").Replace("\"", " ").Trim();
+                        table.Property(prop.Name, collectionAsString);
+                    }
+                    else
+                    {
+                        table.Property(prop.Name, prop.Value?.ToString());
+                    }
+                }
+            }
+        }
+
+        #endregion
     
     }
 }
