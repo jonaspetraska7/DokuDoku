@@ -13,7 +13,6 @@ public class TableConversionTests
     [InlineData("Json4")]
     public void CanConvertToTable(string fileName)
     {
-        
         string jsonString = File.ReadAllText(@$"../../../TestData/{fileName}.txt");
         var myObject = JsonConvert.DeserializeObject(jsonString);
         Doku.PDF.Generate($"{fileName}", ".", x =>

@@ -271,6 +271,20 @@ namespace DokuDoku.PDF
 
             TableConfig(innerTable);
         }
+        
+        /// <summary>
+        /// Table Property
+        /// </summary>
+        /// <param name="table"></param>
+        /// <param name="propertyName"></param>
+        /// <param name="TableConfig"></param>
+        public static void Property(this Table table, Action<Table> TableConfig)
+        {
+            var row = table.AddRow();
+            var innerTable = row.Cells[0].Elements.AddTable();
+
+            TableConfig(innerTable);
+        }
 
         #endregion
 
@@ -311,9 +325,11 @@ namespace DokuDoku.PDF
 
             Table table = innerTable;
 
+            int w = 500;
+
             if (columns.Length == 0)
             {
-                columns = new[] { 250, 250 };
+                columns = new[] { w/4, w-(w/4) };
             }
             
             table.Config(true, columns);
@@ -324,19 +340,66 @@ namespace DokuDoku.PDF
                 {
                     table.Property(prop.Name, x =>
                     {
-                        x.ConvertToTable(prop.Value, columns[0]/2, columns[1]/2);
+                        x.ConvertToTable(prop.Value, columns[1]/4, columns[1]-(columns[1]/4));
                     });
                 }
                 else
                 {
                     if (prop.Value?.GetType().ToString().Contains("JArray") ?? false)
                     {
-                        var collectionAsString = prop.Value?.ToString().Replace("[","").Replace("]","").Replace(",","").Replace("\"", " ").Trim();
-                        table.Property(prop.Name, collectionAsString);
+                        table.Property(prop.Name, x =>
+                        {
+                            x.ConvertToTableArray(prop.Value as JArray, columns[1]);
+                        });
                     }
                     else
                     {
                         table.Property(prop.Name, prop.Value?.ToString());
+                    }
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Automatic table generation
+        /// </summary>
+        /// <param name="innerTable"></param>
+        /// <param name="x"></param>
+        /// <param name="isInnerTable"></param>
+        private static void ConvertToTableArray(this Table innerTable, object x, params int[] columns)
+        {
+            var jArray = JArray.FromObject(x);
+
+            if (jArray == null)
+            {
+                return;
+            }
+
+            Table table = innerTable;
+
+            table.Config(true, columns);
+
+            foreach (var prop in jArray)
+            {
+                if ((!prop?.GetType().ToString().Contains("JArray") ?? false) && (prop?.HasValues ?? false))
+                {
+                    table.Property(x =>
+                    {
+                        x.ConvertToTable(prop, columns[0]/4, columns[0]-(columns[0]/4));
+                    });
+                }
+                else
+                {
+                    if (prop?.GetType().ToString().Contains("JArray") ?? false)
+                    {
+                        table.Property(x =>
+                        {
+                            x.ConvertToTableArray(prop as JArray, columns[0]);
+                        });
+                    }
+                    else
+                    {
+                        table.Property(prop?.ToString());
                     }
                 }
             }
