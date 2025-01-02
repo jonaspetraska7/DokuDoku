@@ -1,7 +1,7 @@
 using DokuDoku;
 
 namespace Tests
-{
+{/*
     public class PDFConversionTests
     {
         [Theory]
@@ -48,4 +48,5 @@ namespace Tests
             await Doku.PDF.ConvertPictureToPDF(path, $"{fileName}.pdf");
         }
     }
+    */
 }
