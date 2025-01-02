@@ -5,7 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <PackageId>DokuDoku</PackageId>
-    <Version>1.0.7</Version>
+    <Version>1.0.8</Version>
     <Authors>jonaspetraska7</Authors>
     <Description>.NET PDF, WORD, EXCEL Library. Easy to use, free forever.</Description>
     <PackageIcon>icon.jpeg</PackageIcon>
@@ -20,8 +20,30 @@
     <EnablePackageValidation>True</EnablePackageValidation>
 	<GenerateDocumentationFile>True</GenerateDocumentationFile>
 	<NoWarn>$(NoWarn);CS1591</NoWarn>
-	<PackageReleaseNotes>Added any Object to Table conversion! V2 - Added handling Object Arrays and Arrays of Arrays :)</PackageReleaseNotes>
+	<PackageReleaseNotes>Added PDF Converter</PackageReleaseNotes>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="_tessdata\eng.traineddata" />
+    <None Remove="_tessdata\rus.traineddata" />
+    <None Remove="_tessdata\uzb.traineddata" />
+    <None Remove="_tessdata\uzb_cyrl.traineddata" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="_tessdata\eng.traineddata">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="_tessdata\rus.traineddata">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="_tessdata\uzb.traineddata">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="_tessdata\uzb_cyrl.traineddata">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 
   <ItemGroup>
     <None Include="..\README.md">
@@ -32,12 +54,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="DotNet.ReproducibleBuilds" Version="1.1.1">
+    <PackageReference Include="DotNet.ReproducibleBuilds" Version="1.2.25">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
-    <PackageReference Include="PDFsharp-MigraDoc" Version="6.0.0" />
+    <PackageReference Include="NAPS2.Images.Gdi" Version="1.1.3" />
+    <PackageReference Include="NAPS2.Sdk" Version="1.1.3" />
+    <PackageReference Include="NAPS2.Tesseract.Binaries" Version="1.2.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="PDFsharp-MigraDoc" Version="6.1.1" />
   </ItemGroup>
 
 </Project>

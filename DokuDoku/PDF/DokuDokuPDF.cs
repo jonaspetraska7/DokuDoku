@@ -33,5 +33,36 @@ namespace DokuDoku.PDF
 
         #endregion
 
+        #region Convert
+
+        public async Task<MemoryStream> ConvertPictureToPDF(MemoryStream pictureFile)
+        {
+            var ms = await PDFConverter.ConvertPictureToPdf(pictureFile);
+
+            return ms;
+        }
+
+        public async Task ConvertPictureToPDF(MemoryStream pictureFile, string savePath)
+        {
+            var ms = await PDFConverter.ConvertPictureToPdf(pictureFile);
+            File.WriteAllBytes(savePath, ms.ToArray());
+        }
+
+        public async Task<MemoryStream> ConvertPictureToPDF(string pictureFilePath)
+        {
+            var ms = await PDFConverter.ConvertPictureToPdf(pictureFilePath);
+
+            return ms;
+        }
+
+        public async Task ConvertPictureToPDF(string pictureFilePath, string savePath)
+        {
+            var ms = await PDFConverter.ConvertPictureToPdf(pictureFilePath);
+
+            File.WriteAllBytes(savePath, ms.ToArray());
+        }
+
+        #endregion
+
     }
 }
