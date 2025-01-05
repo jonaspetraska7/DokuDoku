@@ -33,36 +33,71 @@ namespace DokuDoku.PDF
 
         #endregion
 
-        #region Convert
+        #region Convert PictureToPDF
 
-        public async Task<MemoryStream> ConvertPictureToPDF(MemoryStream pictureFile)
+        public async Task<MemoryStream> ConvertPictureToPDF(MemoryStream pictureFile, string languageCode = PDFConverter.DefaultLanguageCode)
         {
-            var ms = await PDFConverter.ConvertPictureToPdf(pictureFile);
+            var ms = await PDFConverter.ConvertPictureToPdf(pictureFile, languageCode);
 
             return ms;
         }
 
-        public async Task ConvertPictureToPDF(MemoryStream pictureFile, string savePath)
+        public async Task ConvertPictureToPDF(MemoryStream pictureFile, string savePath, string languageCode = PDFConverter.DefaultLanguageCode)
         {
-            var ms = await PDFConverter.ConvertPictureToPdf(pictureFile);
+            var ms = await PDFConverter.ConvertPictureToPdf(pictureFile, languageCode);
             File.WriteAllBytes(savePath, ms.ToArray());
         }
 
-        public async Task<MemoryStream> ConvertPictureToPDF(string pictureFilePath)
+        public async Task<MemoryStream> ConvertPictureToPDF(string pictureFilePath, string languageCode = PDFConverter.DefaultLanguageCode)
         {
-            var ms = await PDFConverter.ConvertPictureToPdf(pictureFilePath);
+            var ms = await PDFConverter.ConvertPictureToPdf(pictureFilePath, languageCode);
 
             return ms;
         }
 
-        public async Task ConvertPictureToPDF(string pictureFilePath, string savePath)
+        public async Task ConvertPictureToPDF(string pictureFilePath, string savePath, string languageCode = PDFConverter.DefaultLanguageCode)
         {
-            var ms = await PDFConverter.ConvertPictureToPdf(pictureFilePath);
+            var ms = await PDFConverter.ConvertPictureToPdf(pictureFilePath, languageCode);
 
             File.WriteAllBytes(savePath, ms.ToArray());
         }
 
         #endregion
 
+        #region Convert PictureToText
+
+        public async Task<string> ConvertPictureToText(MemoryStream pictureFile, string languageCode = PDFConverter.DefaultLanguageCode)
+        {
+            var text = await PDFConverter.ConvertPdfOrPictureToText(pictureFile, languageCode);
+
+            return text;
+        }
+
+        public async Task<string> ConvertPictureToText(string pictureFilePath, string languageCode = PDFConverter.DefaultLanguageCode)
+        {
+            var text = await PDFConverter.ConvertPdfOrPictureToText(pictureFilePath, languageCode);
+
+            return text;
+        }
+
+        #endregion
+
+        #region Convert PDFToText
+
+        public async Task<string> ConvertPdfToText(MemoryStream pictureFile, string languageCode = PDFConverter.DefaultLanguageCode)
+        {
+            var text = await PDFConverter.ConvertPdfOrPictureToText(pictureFile, languageCode);
+
+            return text;
+        }
+
+        public async Task<string> ConvertPdfToText(string pictureFilePath, string languageCode = PDFConverter.DefaultLanguageCode)
+        {
+            var text = await PDFConverter.ConvertPdfOrPictureToText(pictureFilePath, languageCode);
+
+            return text;
+        }
+
+        #endregion
     }
 }

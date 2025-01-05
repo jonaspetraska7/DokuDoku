@@ -1,9 +1,21 @@
 using DokuDoku;
 
 namespace Tests
-{/*
+{
     public class PDFConversionTests
     {
+        /*
+        [Theory]
+        [InlineData("Picture1")]
+        [InlineData("Picture2")]
+        [InlineData("Picture3")]
+        [InlineData("Picture4")]
+        public async Task PDFConvertsFromPathToTextAsync(string fileName)
+        {
+            var path = @$"../../../TestData/{fileName}.png";
+            var text = await Doku.PDF.ConvertPictureToText(path);
+        }
+        
         [Theory]
         [InlineData("Picture1")]
         [InlineData("Picture2")]
@@ -47,6 +59,7 @@ namespace Tests
             var path = @$"../../../TestData/{fileName}.png";
             await Doku.PDF.ConvertPictureToPDF(path, $"{fileName}.pdf");
         }
+            */
     }
-    */
+
 }
